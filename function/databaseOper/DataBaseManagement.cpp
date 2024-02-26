@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
-
+#include <QMessageBox>
 
 Q_GLOBAL_STATIC(DataBaseManagement, dbMs)
 DataBaseManagement::DataBaseManagement(QObject *parent)
@@ -27,12 +27,18 @@ DataBaseManagement *DataBaseManagement::instance()
 
 bool DataBaseManagement::checkLogin(const QString & userName, const QString & passwd)
 {
+    ///需要更新对应表数据
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM users WHERE username = :username AND password = :password");
     query.bindValue(":username", userName);
     query.bindValue(":password", passwd);
 
     return query.exec() && query.next();
+}
+
+void DataBaseManagement::queryEventListData(const QString &startDate, const QString *endDate, QueryType queryType, EventListData &eventlistData)
+{
+    ///todo... 待实现
 }
 
 void DataBaseManagement::connectDB()
@@ -51,6 +57,9 @@ void DataBaseManagement::connectDB()
     ///![0]
 
     if (!m_db.open()) {
+
+        QMessageBox::warning(nullptr, "数据库提示","数据库连接失败!");
+
         qWarning() << "Error opening database:" << m_db.lastError().text();
         // 处理连接错误
     } else {

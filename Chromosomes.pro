@@ -16,6 +16,7 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+            function/data/DataStruct.h \
             function/databaseOper/DataBaseManagement.h \
             #function/databaseOper/DataBaseManagerThread.h \
             function/login/LoginObject.h
