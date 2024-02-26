@@ -11,13 +11,13 @@ win32-msvc*: {
 
 SOURCES += \
         function/databaseOper/DataBaseManagement.cpp \
-        function/databaseOper/DataBaseManagerThread.cpp \
+        #function/databaseOper/DataBaseManagerThread.cpp \
         function/login/LoginObject.cpp \
         main.cpp
 
 HEADERS += \
             function/databaseOper/DataBaseManagement.h \
-            function/databaseOper/DataBaseManagerThread.h \
+            #function/databaseOper/DataBaseManagerThread.h \
             function/login/LoginObject.h
 
 INCLUDEPATH += \
