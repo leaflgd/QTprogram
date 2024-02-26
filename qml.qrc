@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qml/LoginPage.qml</file>
+        <file>CommonData.qml</file>
+        <file>qml/widget/FTextInput.qml</file>
+        <file>qmldir</file>
+        <file>qml/widget/FPushButton.qml</file>
+        <file>qml/EventListPage.qml</file>
+    </qresource>
+</RCC>
