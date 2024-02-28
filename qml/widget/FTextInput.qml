@@ -7,7 +7,7 @@ Rectangle {
     width: id_row_item.width
 
     property string title: ""
-    property string titleColor: "#363636"
+    property string titleColor: "#4F4F4F"
 
     property alias font:id_title_text.font
     property alias placeholderText:id_textField.placeholderText
@@ -37,7 +37,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: id_ftextInput.leftPadding
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: CommonData.font_size_28
+                font.pointSize: CommonData.font_size_18
                 font.bold: true
 
             }

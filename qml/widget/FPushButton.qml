@@ -9,14 +9,16 @@ Button {
     property string pressedBackgroundColor: "#1C86EE"
 
     property string textColor: "white"
+    property string pressedTextColor: textColor
 
     property int radius
 
     contentItem: Text {
+        id:id_contentItemText
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: textColor
+        color: control.pressed? pressedTextColor:textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight

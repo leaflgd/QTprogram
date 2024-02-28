@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>loginBackground.jpg</file>
         <file>eventListBackground.jpg</file>
+        <file>testImage.jpg</file>
     </qresource>
 </RCC>

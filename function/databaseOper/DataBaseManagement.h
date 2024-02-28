@@ -14,7 +14,6 @@
 * @blogs: https://blog.csdn.net/CLinuxF
 */
 
-///单例类
 class DataBaseManagement : public QObject
 {
     Q_OBJECT
@@ -28,7 +27,6 @@ public:
         Counted     //已记数
     };
 
-    static DataBaseManagement * instance();
 
     /**
      * @brief checkLogin    登录接口
@@ -36,7 +34,7 @@ public:
      * @param passwd        登录密码
      * @return 登录成功返回true， 登录失败返回false
      */
-    bool checkLogin(const QString &userName, const QString &passwd);
+    void checkLogin(const QString &userName, const QString &passwd);
 
     /**
      * @brief queryEventListData 查询事件列表接口
@@ -51,7 +49,7 @@ private:
     void connectDB();
 
 signals:
-
+    void sigLoginFinish(bool isLogin);
 private:
     QSqlDatabase m_db;
 

@@ -4,7 +4,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 
-Q_GLOBAL_STATIC(DataBaseManagement, dbMs)
 DataBaseManagement::DataBaseManagement(QObject *parent)
     : QObject{parent}
 {
@@ -20,12 +19,7 @@ DataBaseManagement::~DataBaseManagement()
     }
 }
 
-DataBaseManagement *DataBaseManagement::instance()
-{
-    return dbMs();
-}
-
-bool DataBaseManagement::checkLogin(const QString & userName, const QString & passwd)
+void DataBaseManagement::checkLogin(const QString & userName, const QString & passwd)
 {
     ///需要更新对应表数据
     QSqlQuery query(m_db);
@@ -33,7 +27,13 @@ bool DataBaseManagement::checkLogin(const QString & userName, const QString & pa
     query.bindValue(":username", userName);
     query.bindValue(":password", passwd);
 
-    return query.exec() && query.next();
+    bool isLogin = false;
+    if( query.exec() && query.next() )
+    {
+        isLogin = true;
+    }
+    Q_EMIT sigLoginFinish(isLogin);
+   // return
 }
 
 void DataBaseManagement::queryEventListData(const QString &startDate, const QString *endDate, QueryType queryType, EventListData &eventlistData)

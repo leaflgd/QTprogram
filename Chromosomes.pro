@@ -12,6 +12,10 @@ win32-msvc*: {
 SOURCES += \
         function/databaseOper/DataBaseManagement.cpp \
         #function/databaseOper/DataBaseManagerThread.cpp \
+        function/databaseOper/DataBaseThreadManager.cpp \
+        function/databaseOper/databasethreadmanagerprivate.cpp \
+        function/eventLIist/EventListItemData.cpp \
+        function/eventLIist/EventListObject.cpp \
         function/login/LoginObject.cpp \
         main.cpp
 
@@ -19,12 +23,18 @@ HEADERS += \
             function/data/DataStruct.h \
             function/databaseOper/DataBaseManagement.h \
             #function/databaseOper/DataBaseManagerThread.h \
+            function/databaseOper/DataBaseThreadManager.h \
+            function/databaseOper/DataBaseThreadManagerPrivate_p.h \
+            function/eventLIist/EventListItemData.h \
+            function/eventLIist/EventListObject.h \
             function/login/LoginObject.h
 
 INCLUDEPATH += \
         function \
         function/databaseOper \
-        function/login
+        function/login \
+        function/eventLIist \
+        function/data
 
 RESOURCES += qml.qrc \
     image/image.qrc
