@@ -61,7 +61,10 @@ Item {
                         let isLogin = LoginObject.loginSystem( id_userNameInput.display, id_passwdInput.display );
                         if( isLogin )
                         {
+                            ///调用搜索接口
+                            EventListObject.startQueryEventListInfoData();
                             CommonData.curPageType = CommonData.EventListPage
+
                         }
                     }
                 }

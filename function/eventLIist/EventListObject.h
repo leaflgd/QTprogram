@@ -23,7 +23,9 @@ public:
     /**
      * @brief startQueryEventListInfoData 开始调用事件列表页面所有信息
      */
-    Q_INVOKABLE void startQueryEventListInfoData(){};
+    Q_INVOKABLE void startQueryEventListInfoData(){
+        setPatientInformations(0);
+    };
 
     Q_INVOKABLE void setPatientInformations( int eventItemDataIndex );
 

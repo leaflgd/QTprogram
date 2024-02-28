@@ -11,7 +11,7 @@ Item {
 
     property string loginPageUri: "qrc:/qml/LoginPage.qml"
     property string eventListPageUri: "qrc:/qml/EventListPage.qml"
-    property string analysisPageUri: ""
+    property string analysisPageUri: "qrc:/qml/AnalysisPage.qml"
     //默认登录页面
     property int curPageType:CommonData.LoginPage
     property string curPageUri: loginPageUri
@@ -35,6 +35,7 @@ Item {
     property int designScreenWidth: 1920
     property int designScreenHeight: 1080
 
+    property int font_size_12:12
     property int font_size_13:13
     property int font_size_14:14
     property int font_size_15:15
@@ -49,6 +50,7 @@ Item {
     property int font_size_28:28
     property int font_size_30:30
     property int font_size_32:32
+    property int font_size_34:34
 
 
 }

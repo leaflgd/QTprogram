@@ -7,5 +7,6 @@
         <file>qmldir</file>
         <file>qml/widget/FPushButton.qml</file>
         <file>qml/EventListPage.qml</file>
+        <file>qml/AnalysisPage.qml</file>
     </qresource>
 </RCC>
