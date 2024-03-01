@@ -13,7 +13,7 @@ SOURCES += \
         function/databaseOper/DataBaseManagement.cpp \
         #function/databaseOper/DataBaseManagerThread.cpp \
         function/databaseOper/DataBaseThreadManager.cpp \
-        function/databaseOper/databasethreadmanagerprivate.cpp \
+        function/databaseOper/DataBaseThreadManagerPrivate.cpp \
         function/eventLIist/EventListItemData.cpp \
         function/eventLIist/EventListObject.cpp \
         function/login/LoginObject.cpp \

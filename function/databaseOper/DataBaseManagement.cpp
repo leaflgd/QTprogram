@@ -44,16 +44,16 @@ void DataBaseManagement::queryEventListData(const QString &startDate, const QStr
 void DataBaseManagement::connectDB()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE"); // 使用SQLite数据库驱动程序
-    m_db.setDatabaseName("your_database_file.db"); // 设置数据库文件名
+    m_db.setDatabaseName("genedb.db"); // 设置数据库文件名
 
     ///******** 连接mysql
     //![0] 连接MySQL数据库
     // m_db = QSqlDatabase::addDatabase("QMYSQL");
-    // m_db.setHostName("your_mysql_host");
+    // m_db.setHostName("127.0.01");
     // m_db.setPort(3306);  // 默认MySQL端口
-    // m_db.setDatabaseName("your_database_name");
-    // m_db.setUserName("your_username");
-    // m_db.setPassword("your_password");
+    // m_db.setDatabaseName("genedb");
+    // m_db.setUserName("root");
+    // m_db.setPassword("123456");
     ///![0]
 
     if (!m_db.open()) {

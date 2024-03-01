@@ -171,7 +171,7 @@ Rectangle {
                                 FPushButton
                                 {
                                     id:id_startDateSelect_btn
-                                    width: id_dateSelect_item.width/3
+                                    width: id_dateSelect_item.width/3 + 25
                                     height: id_dateSelect_item.height
                                     text: id_dateSelect_item.today.toLocaleDateString()
                                     font.bold: true
@@ -186,7 +186,7 @@ Rectangle {
                                 FPushButton
                                 {
                                     id:id_endDateSelect_btn
-                                    width: id_dateSelect_item.width/3
+                                    width: id_dateSelect_item.width/3 + 25
                                     height: id_dateSelect_item.height
                                     text: {
                                         let futureDate = new Date(id_dateSelect_item.today.getTime() - 3 * 24 * 60 * 60 * 1000);
