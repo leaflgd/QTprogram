@@ -1,34 +1,11 @@
-#include "EventListObject.h"
-#include "EventListItemData.h"
+﻿#include "EventListObject.h"
+#include "DataBaseThreadManager.h"
+#include "GlassSlideData.h"
+#include <QMessageBox>
 
 EventListObject::EventListObject(QObject *parent)
     : QObject{parent}
 {
-
-    for( int i= 0; i < 9; i ++)
-    {
-        EventListItemData * itemData= new EventListItemData(this);
-        itemData->setEventListItemName("itemName" + QString::number(i));
-        itemData->setPatientName(i%2==0?"战三":"李四");
-        itemData->setPatientNumber(QString::number(i+1));
-        itemData->setPatientSex(i%2==0?"女":"男");
-        itemData->setDiagnosis("合格");
-        itemData->setDiagnosticOpinion("DDEFE住院关闸，的点到为dddddddeff止tian d 诶案犯分分而非而非而非额而非而非");
-        itemData->setReportPrinter("王 sir");
-        itemData->setKaryotype("xy11");
-        itemData->setAnalyse("没有问题");
-        itemData->setCount("10");
-
-        QStringList chorPics;
-        for(int i = 0 ; i < 40 ; i++)
-        {
-           chorPics.append("qrc:/testImage.jpg");
-        }
-        itemData->setChromosomeGallery(chorPics);
-
-
-        m_listItems.append( itemData );
-    }
 
     m_patientTitle.append( "编号" );
     m_patientTitle.append( "姓名" );
@@ -45,33 +22,7 @@ EventListObject::EventListObject(QObject *parent)
 
 void EventListObject::setPatientInformations(int eventItemDataIndex)
 {
-    m_patientInformations.clear();
-    emit patientInformationsChanged();
 
-    m_chromosomeGallery.clear();
-    emit chromosomeGalleryChanged();
-
-    EventListItemData * itemData = m_listItems.at(eventItemDataIndex);
-
-    m_patientInformations.append( itemData->patientNumber() );
-    m_patientInformations.append( itemData->patientName() );
-    m_patientInformations.append( itemData->patientSex() );
-    m_patientInformations.append( itemData->diagnosis() );
-    m_patientInformations.append( itemData->diagnosticOpinion() );
-    m_patientInformations.append( itemData->reportPrinter() );
-    m_patientInformations.append( itemData->karyotype() );
-    m_patientInformations.append( itemData->analyse() );
-    m_patientInformations.append( itemData->count() );
-
-    emit patientInformationsChanged();
-
-    m_chromosomeGallery = itemData->chromosomeGallery();
-    emit chromosomeGalleryChanged();
-}
-
-QVariant EventListObject::listItems() const
-{
-    return QVariant::fromValue(m_listItems);
 }
 
 QStringList EventListObject::patientInformations() const
@@ -88,3 +39,136 @@ QStringList EventListObject::chromosomeGallery() const
 {
     return m_chromosomeGallery;
 }
+
+void EventListObject::queryEventImageData(const QString &startDate, const QString &endData, const QString &queryConditions, int queryType)
+{
+    QStringList images = DataBaseThreadManager::instance()->queryEventImageData(
+        startDate,
+        endData,
+        queryConditions,
+        queryType
+        );
+
+    m_chromosomeGallery = images;
+
+    qInfo()<<"images size = "<<images;
+    emit chromosomeGalleryChanged();
+}
+
+void EventListObject::queryEventGlassSliderData()
+{
+    QStringList glassSliderDataList = DataBaseThreadManager::instance()->queryEventGlassSliderData();
+
+    cleanGlassSliderObjectModel();
+
+    for( auto glassSlider : glassSliderDataList)
+    {
+        GlassSlideData * glassItem = new GlassSlideData(this);
+        glassItem->setGlassSheetContainerName( glassSlider );
+
+        m_glassSliderObjectModel.append( glassItem );
+    }
+
+    emit glassSliderObjectModelChanged();
+}
+
+void EventListObject::queryEventGlassSubData( QString glassSliderName )
+{
+    auto glassSliderHandle = getGlassSlideObject(glassSliderName);
+    if( glassSliderHandle ){
+
+        QStringList glassSliderDataList ;
+        if( glassSliderHandle->backupsGlassSheet().isEmpty() )
+        {
+            glassSliderDataList = DataBaseThreadManager::instance()->queryEventGlassSubData(glassSliderName);
+        }
+        else
+        {
+            glassSliderDataList = glassSliderHandle->backupsGlassSheet();
+        }
+
+        if( !glassSliderDataList.isEmpty() )
+        {
+            glassSliderHandle->setGlassSheet( glassSliderDataList );
+            glassSliderHandle->setBackupsGlassSheet( glassSliderDataList );
+
+            emit glassSliderObjectModelChanged();
+        }
+    }
+
+}
+
+void EventListObject::cleanEventGlassSubData( QString glassSliderName )
+{
+    auto glassSliderHandle = getGlassSlideObject(glassSliderName);
+
+    if( glassSliderHandle ){
+        glassSliderHandle->cleanGlassSheetData();
+    }
+}
+
+void EventListObject::querySlideDataImage(QString eventName, QString slideNum)
+{
+    m_chromosomeGallery.clear();
+    QStringList images = DataBaseThreadManager::instance()->querySlideDataImage(
+        eventName,
+        slideNum
+        );
+
+    m_chromosomeGallery = images;
+
+    qInfo()<<"images size = "<<images;
+    if( m_chromosomeGallery.isEmpty() )
+    {
+        QMessageBox::warning(nullptr, "查询提示","没有查询到数据!");
+    }
+    emit chromosomeGalleryChanged();
+}
+
+void EventListObject::queryPatientInformation(QString eventname)
+{
+    m_patientInformations.clear();
+    emit patientInformationsChanged();
+
+    qInfo()<<" queryPatientInformation eventName = "<<eventname;
+    ST_PatientInformationData patientData = DataBaseThreadManager::instance()->queryPatientInformation( eventname );
+
+    m_patientInformations.append( patientData.m_patientNumber );
+    m_patientInformations.append( patientData.m_patientName );
+    m_patientInformations.append( patientData.m_patientSex );
+    m_patientInformations.append( patientData.m_diagnosis );
+    m_patientInformations.append( patientData.m_diagnosticOpinion );
+    m_patientInformations.append( patientData.m_reportPrinter );
+    m_patientInformations.append( patientData.m_karyotype );
+    m_patientInformations.append( patientData.m_analyse );
+    m_patientInformations.append( patientData.m_count );
+
+    emit patientInformationsChanged();
+}
+
+void EventListObject::cleanGlassSliderObjectModel()
+{
+    qDeleteAll( m_glassSliderObjectModel ) ;
+    m_glassSliderObjectModel.clear();
+
+    emit glassSliderObjectModelChanged();
+}
+
+GlassSlideData *EventListObject::getGlassSlideObject( QString glassSheetContainerName )
+{
+    for ( auto glassObjectItem: m_glassSliderObjectModel )
+    {
+        if( glassObjectItem->glassSheetContainerName() == glassSheetContainerName )
+        {
+            return glassObjectItem;
+        }
+    }
+
+    return nullptr;
+}
+
+QVariant EventListObject::glassSliderObjectModel() const
+{
+    return QVariant::fromValue( m_glassSliderObjectModel );
+}
+

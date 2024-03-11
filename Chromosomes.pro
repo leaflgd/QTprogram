@@ -4,29 +4,37 @@ QT += quick sql widgets
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+DESTDIR=$$PWD/db
+
 win32-msvc*: {
     QMAKE_CFLAGS *= /utf-8
     QMAKE_CXXFLAGS *= /utf-8
 }
 
 SOURCES += \
+        function/analysisi/AnalysisItemData.cpp \
+        function/analysisi/AnalysisPageObject.cpp \
         function/databaseOper/DataBaseManagement.cpp \
         #function/databaseOper/DataBaseManagerThread.cpp \
         function/databaseOper/DataBaseThreadManager.cpp \
         function/databaseOper/DataBaseThreadManagerPrivate.cpp \
-        function/eventLIist/EventListItemData.cpp \
         function/eventLIist/EventListObject.cpp \
+        function/eventLIist/GlassSlideData.cpp \
+        function/eventLIist/PatientInformationData.cpp \
         function/login/LoginObject.cpp \
         main.cpp
 
 HEADERS += \
+            function/analysisi/AnalysisItemData.h \
+            function/analysisi/AnalysisPageObject.h \
             function/data/DataStruct.h \
             function/databaseOper/DataBaseManagement.h \
             #function/databaseOper/DataBaseManagerThread.h \
             function/databaseOper/DataBaseThreadManager.h \
             function/databaseOper/DataBaseThreadManagerPrivate_p.h \
-            function/eventLIist/EventListItemData.h \
             function/eventLIist/EventListObject.h \
+            function/eventLIist/GlassSlideData.h \
+            function/eventLIist/PatientInformationData.h \
             function/login/LoginObject.h
 
 INCLUDEPATH += \
@@ -34,7 +42,8 @@ INCLUDEPATH += \
         function/databaseOper \
         function/login \
         function/eventLIist \
-        function/data
+        function/data \
+        function/analysisi
 
 RESOURCES += qml.qrc \
     image/image.qrc

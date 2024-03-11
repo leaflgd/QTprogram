@@ -1,4 +1,4 @@
-import QtQuick 2.15
+﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import "./widget"
 import "../"
@@ -31,6 +31,8 @@ Item {
                 color:"#80FFFFFF"
                 intpuBackground: "transparent"
                 radius: height/2
+                text:"ceshi"
+                textFieldWidth:300
             }
             FTextInput{
                 id:id_passwdInput
@@ -41,6 +43,9 @@ Item {
                 intpuBackground: "transparent"
                 radius: height/2
                 echoMode: TextInput.Password
+                text:"123456"
+                textFieldWidth:300
+
             }
 
             Item{
@@ -58,13 +63,10 @@ Item {
 
                     onClicked:
                     {
-                        let isLogin = LoginObject.loginSystem( id_userNameInput.display, id_passwdInput.display );
+                        let isLogin = LoginObject.loginSystem( id_userNameInput.display, id_passwdInput.displayText );
                         if( isLogin )
                         {
-                            ///调用搜索接口
-                            EventListObject.startQueryEventListInfoData();
                             CommonData.curPageType = CommonData.EventListPage
-
                         }
                     }
                 }

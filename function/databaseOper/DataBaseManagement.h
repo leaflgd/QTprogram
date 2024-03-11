@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QSqlDatabase>
-#include "data/DataStruct.h"
+#include "DataStruct.h"
 
 /**
 * @brief: 摘要
@@ -22,11 +22,14 @@ public:
     ~DataBaseManagement();
 
     enum QueryType{
-        PhotoGallery, //图片库
+        PhotoGallery = 0, //图片库
         Analyzed,  //已分析
         Counted     //已记数
     };
 
+public slots:
+    //连接数据库
+    void connectDB();
 
     /**
      * @brief checkLogin    登录接口
@@ -34,24 +37,36 @@ public:
      * @param passwd        登录密码
      * @return 登录成功返回true， 登录失败返回false
      */
-    void checkLogin(const QString &userName, const QString &passwd);
+    bool checkLogin(const QString &userName, const QString &passwd);
 
     /**
      * @brief queryEventListData 查询事件列表接口
      * @param startDate  查询开始日期
      * @param endDate    查询结束日期
      * @param queryType 查询类型，参考QueryType
-     * @param eventlistData 查询后待赋值的数据结构
+     * @param queryConditions 搜索查询过滤条件
      */
-    void queryEventListData(const QString & startDate, const QString * endDate, QueryType queryType, EventListData & eventlistData);
-private:
-    //连接数据库
-    void connectDB();
+    QStringList queryEventListData(const QString & startDate, const QString & endDate,  const QString &queryConditions, int queryType);
+
+    QStringList queryEventAllName();
+
+    QStringList querySlideData( QString eventName );
+
+
+    //通过slide_num查询图库
+    QStringList querySlideDataImage(QString eventName, QString slideNum);
+
+    //请求病人信息
+    ST_PatientInformationData queryPatientInformation( QString eventname );
+private :
+
 
 signals:
     void sigLoginFinish(bool isLogin);
 private:
     QSqlDatabase m_db;
+
+    int m_eventId = -1;
 
 };
 

@@ -14,9 +14,48 @@ DataBaseThreadManager *DataBaseThreadManager::instance()
     return dbThreadMs();
 }
 
-void DataBaseThreadManager::checkLogin(QString userName, QString userPasswd)
+bool DataBaseThreadManager::checkLogin(QString userName, QString userPasswd)
 {
     Q_D( DataBaseThreadManager );
 
-    emit d->sigLoginUser( userName , userPasswd );
+    bool isLogin = d->sigLoginUser( userName , userPasswd );
+    return  isLogin;
+}
+
+QStringList DataBaseThreadManager::queryEventImageData(const QString &startDate, const QString &endData, const QString &queryConditions, int queryType)
+{
+    Q_D(DataBaseThreadManager);
+
+    return d->queryEventImageData(
+        startDate,
+        endData,
+        queryConditions,
+        queryType);
+}
+
+QStringList DataBaseThreadManager::queryEventGlassSliderData()
+{
+    Q_D(DataBaseThreadManager);
+
+    return d->queryEventGlassSliderData();
+}
+
+QStringList DataBaseThreadManager::queryEventGlassSubData( QString eventName )
+{
+    Q_D(DataBaseThreadManager);
+
+    return d->queryEventGlassSubData(eventName);
+}
+
+QStringList DataBaseThreadManager::querySlideDataImage(QString eventName, QString slideNum)
+{
+    Q_D(DataBaseThreadManager);
+    return d->querySlideDataImage( eventName, slideNum );
+}
+
+//请求病人信息
+ST_PatientInformationData DataBaseThreadManager::queryPatientInformation(QString eventname)
+{
+    Q_D(DataBaseThreadManager);
+    return d->queryPatientInformation( eventname );
 }

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMap>
 
-class EventListItemData : public QObject
+class PatientInformationData : public QObject
 {
     Q_OBJECT
 
@@ -18,14 +18,9 @@ class EventListItemData : public QObject
     Q_PROPERTY(QString karyotype READ karyotype WRITE setKaryotype NOTIFY karyotypeChanged FINAL)
     Q_PROPERTY(QString analyse READ analyse WRITE setAnalyse NOTIFY analyseChanged FINAL)
     Q_PROPERTY(QString count READ count WRITE setCount NOTIFY countChanged FINAL)
-    Q_PROPERTY(QStringList otherDatas READ otherDatas WRITE setOtherDatas NOTIFY otherDatasChanged FINAL)
-    Q_PROPERTY(QStringList chromosomeGallery READ chromosomeGallery WRITE setChromosomeGallery NOTIFY chromosomeGalleryChanged FINAL)
 
-    Q_PROPERTY(bool isExportedReport READ isExportedReport WRITE setIsExportedReport NOTIFY isExportedReportChanged FINAL)
 public:
-    explicit EventListItemData(QObject *parent = nullptr);
-
-
+    explicit PatientInformationData(QObject *parent = nullptr);
 
     QString eventListItemName() const;
     void setEventListItemName(const QString &newEventListItemName);
@@ -57,14 +52,8 @@ public:
     QString count() const;
     void setCount(const QString &newCount);
 
-    QStringList otherDatas() const;
-    void setOtherDatas(const QStringList &newOtherDatas);
 
-    QStringList chromosomeGallery() const;
-    void setChromosomeGallery(const QStringList &newChromosomeGallery);
 
-    bool isExportedReport() const;
-    void setIsExportedReport(bool newIsExportedReport);
 
 signals:
 
@@ -90,32 +79,22 @@ signals:
 
     void countChanged();
 
-    void otherDatasChanged();
 
-    void chromosomeGalleryChanged();
-
-    void isExportedReportChanged();
 
 private:
     //事件列表item数据，对应C505030(80/120.3)数据
     QString m_eventListItemName;
 
     //病人其它数据
-    QString m_patientNumber;
-    QString m_patientName;
-    QString m_patientSex;
+    QString m_patientNumber;       //病人编号
+    QString m_patientName;          //名称
+    QString m_patientSex;               //性别
     QString m_diagnosis;                //临床诊断
     QString m_diagnosticOpinion;  //诊断意见
     QString m_reportPrinter;         //报告打印人
     QString m_karyotype;               //核型
     QString m_analyse;                   //分析
     QString m_count;                       //计数
-    QStringList m_otherDatas;        //病人其它数据
-
-     //病人对应的染色体图
-    QStringList m_chromosomeGallery;
-
-    bool m_isExportedReport = false; //是否导致报告
 };
 
 #endif // EVENTLISTITEMDATA_H

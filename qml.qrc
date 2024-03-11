@@ -8,5 +8,7 @@
         <file>qml/widget/FPushButton.qml</file>
         <file>qml/EventListPage.qml</file>
         <file>qml/AnalysisPage.qml</file>
+        <file>qml/widget/FTextComboBox.qml</file>
+        <file>qml/widget/FTextEdit.qml</file>
     </qresource>
 </RCC>

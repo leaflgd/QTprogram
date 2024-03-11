@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import "../../"
 
 Rectangle {
@@ -14,12 +15,15 @@ Rectangle {
     property string intpuBorderColor :"#6495ED"
     property string intpuBackground: "#80FFFFFF"
     property bool round: true
-    property int textFieldWidth:300
+    property int textFieldWidth: id_ftextInput.width - id_titleItem.width - leftPadding*2
     property int intputHeight: height
 
+
+    property alias text:id_textField.text
     property alias echoMode:id_textField.echoMode
 
     property alias display: id_textField.displayText
+    property alias displayText: id_textField.text
 
     property int leftPadding:15
     Row{
@@ -27,6 +31,7 @@ Rectangle {
         spacing: 8
 
         Item{
+            id:id_titleItem
             height:intputHeight
             width:id_title_text.contentWidth + id_ftextInput.leftPadding
          //   color:"red"
@@ -50,6 +55,8 @@ Rectangle {
 
             font.pixelSize: CommonData.font_size_20
 
+            selectByMouse:true
+            selectedTextColor:"white"
             background: Rectangle {
                 implicitWidth: textFieldWidth
                 implicitHeight: intputHeight

@@ -1,35 +1,30 @@
-#ifndef EVENTLISTOBJECT_H
+﻿#ifndef EVENTLISTOBJECT_H
 #define EVENTLISTOBJECT_H
 
 #include <QObject>
 #include <QVariant>
-#include <QtQml>
+#include <QQmlEngine>
 
-class EventListItemData;
+class PatientInformationData;
+class GlassSlideData;
 class EventListObject : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
     QML_SINGLETON
 
-    Q_PROPERTY(QVariant listItems READ listItems  NOTIFY listItemsChanged FINAL)
     Q_PROPERTY(QStringList patientInformations READ patientInformations NOTIFY patientInformationsChanged FINAL)
     Q_PROPERTY(QStringList patientTitle READ patientTitle  NOTIFY patientTitleChanged FINAL)
 
     Q_PROPERTY(QStringList chromosomeGallery READ chromosomeGallery  NOTIFY chromosomeGalleryChanged FINAL)
+
+    Q_PROPERTY(QVariant glassSliderObjectModel READ glassSliderObjectModel  NOTIFY glassSliderObjectModelChanged FINAL)
+
 public:
     explicit EventListObject(QObject *parent = nullptr);
 
-    /**
-     * @brief startQueryEventListInfoData 开始调用事件列表页面所有信息
-     */
-    Q_INVOKABLE void startQueryEventListInfoData(){
-        setPatientInformations(0);
-    };
-
     Q_INVOKABLE void setPatientInformations( int eventItemDataIndex );
 
-    QVariant listItems() const;
 
     QStringList patientInformations() const;
 
@@ -37,6 +32,24 @@ public:
 
     QStringList chromosomeGallery() const;
 
+    QVariant glassSliderObjectModel() const;
+
+public slots:
+    void queryEventImageData(const QString &startDate, const QString &endData, const QString &queryConditions, int queryType);
+    //请求所有的eventName, 玻璃片容器名称
+    void queryEventGlassSliderData();
+    //请求玻璃片子数据
+    void queryEventGlassSubData(QString glassSliderName);
+    void cleanEventGlassSubData(QString glassSliderName);
+    //点击玻璃片获取对应的图片
+    void querySlideDataImage(QString eventName, QString slideNum);
+
+    //请求病人信息
+    void queryPatientInformation( QString eventname );
+private:
+    void cleanGlassSliderObjectModel();
+
+    GlassSlideData * getGlassSlideObject(QString glassSheetContainerName);
 signals:
     void listItemsChanged();
     void patientInformationsChanged();
@@ -45,8 +58,11 @@ signals:
 
     void chromosomeGalleryChanged();
 
+    void glassSliderObjectModelChanged();
+
 private:
-    QList<EventListItemData *> m_listItems;
+
+    QList<GlassSlideData *> m_glassSliderObjectModel;
     QStringList m_patientInformations;
     QStringList m_patientTitle;
 

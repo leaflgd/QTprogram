@@ -7,9 +7,8 @@ import "./"
 ApplicationWindow
 {
     id:id_applicationWindow
-    width: CommonData.designScreenWidth
-    height: CommonData.designScreenHeight
-
+    width: Math.min( Screen.desktopAvailableWidth, CommonData.designScreenWidth )
+    height:Math.min( Screen.desktopAvailableHeight, CommonData.designScreenHeight )
     maximumWidth:width
     maximumHeight: height
 
@@ -21,7 +20,6 @@ ApplicationWindow
 
     title: qsTr("demo pro")
 
-
     Loader{
         anchors.fill: parent
         source:CommonData.curPageUri
@@ -29,6 +27,7 @@ ApplicationWindow
 
     Component.onCompleted:
     {
-        id_applicationWindow.FullScreen
+      //  id_applicationWindow.FullScreen
+
     }
 }
